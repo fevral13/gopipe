@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/spf13/viper"
 	"strings"
+
+	"github.com/spf13/viper"
 )
 
 // GP_URL=https://git....
@@ -14,22 +15,22 @@ import (
 type AppConfig struct {
 	apiUrl       string
 	apiKey       string
+	mainBranches []string
 	projectId    int
 	delay        int
-	mainBranches []string
 }
 
 func getConfig() AppConfig {
 	viper.SetEnvPrefix("gp")
-	viper.BindEnv("url")
+	_ = viper.BindEnv("url")
 	viper.SetDefault("url", "https://gitlab.com/")
 
-	viper.BindEnv("api_key")
-	viper.BindEnv("project_id")
-	viper.BindEnv("delay")
+	_ = viper.BindEnv("api_key")
+	_ = viper.BindEnv("project_id")
+	_ = viper.BindEnv("delay")
 	viper.SetDefault("delay", 10)
 
-	viper.BindEnv("main_branches")
+	_ = viper.BindEnv("main_branches")
 	mainBranchesString := viper.GetString("main_branches")
 	mainBranches := strings.Split(mainBranchesString, ",")
 

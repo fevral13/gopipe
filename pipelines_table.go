@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"math"
+	"time"
+
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 	"github.com/xanzy/go-gitlab"
-	"math"
-	"time"
 )
 
 var titles = []string{
@@ -47,7 +48,7 @@ func (ps *Pipelines) GetCell(row, column int) *tview.TableCell {
 		}
 	case 4:
 		if pipeline.Status == "running" {
-			pipelineDuration := time.Now().Sub(*pipeline.StartedAt).Seconds()
+			pipelineDuration := time.Since(*pipeline.StartedAt).Seconds()
 			minutes := math.Round(pipelineDuration / 60)
 			seconds := math.Round(math.Mod(pipelineDuration, 60))
 
@@ -62,9 +63,11 @@ func (ps *Pipelines) GetCell(row, column int) *tview.TableCell {
 	}
 
 	cell := tview.NewTableCell(content)
-	if pipeline.Status == "failed" {
+
+	switch pipeline.Status {
+	case "failed":
 		cell.SetTextColor(tcell.ColorRed)
-	} else if pipeline.Status == "success" {
+	case "success":
 		cell.SetTextColor(tcell.ColorGreen)
 	}
 
