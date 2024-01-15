@@ -60,8 +60,9 @@ func streamPipelines(config *AppConfig, client *gitlab.Client, out chan<- Pipeli
 	}
 }
 
+
 func getGitlabClient(config *AppConfig) *gitlab.Client {
-	gl, err := gitlab.NewClient(
+	glab, err := gitlab.NewClient(
 		config.apiKey,
 		gitlab.WithBaseURL(config.apiUrl),
 	)
@@ -69,7 +70,7 @@ func getGitlabClient(config *AppConfig) *gitlab.Client {
 	if err != nil {
 		panic("Error creating GL client")
 	}
-	return gl
+	return glab
 }
 
 func updateUI(pipelinesStream <-chan PipelinesSnapshot, application *tview.Application, view *tview.Table) {
