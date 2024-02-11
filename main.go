@@ -60,7 +60,6 @@ func streamPipelines(config *AppConfig, client *gitlab.Client, out chan<- Pipeli
 	}
 }
 
-
 func getGitlabClient(config *AppConfig) *gitlab.Client {
 	glab, err := gitlab.NewClient(
 		config.apiKey,
