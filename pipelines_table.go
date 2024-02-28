@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/xanzy/go-gitlab"
 	"math"
 	"time"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
-	"github.com/xanzy/go-gitlab"
 )
 
 var titles = []string{
@@ -24,6 +24,7 @@ type PipelinesSnapshot = []*gitlab.Pipeline
 type Pipelines struct {
 	tview.TableContentReadOnly
 	pipelinesSnapshot PipelinesSnapshot
+	events            []string
 }
 
 func (ps *Pipelines) GetCell(row, column int) *tview.TableCell {

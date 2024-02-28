@@ -20,7 +20,7 @@ type AppConfig struct {
 	delay        int
 }
 
-func getConfig() AppConfig {
+func getConfig() *AppConfig {
 	viper.SetEnvPrefix("gp")
 	_ = viper.BindEnv("url")
 	viper.SetDefault("url", "https://gitlab.com/")
@@ -48,5 +48,5 @@ func getConfig() AppConfig {
 		panic("Project Id is not found in env. Export GP_PROJECT_ID")
 	}
 
-	return config
+	return &config
 }
